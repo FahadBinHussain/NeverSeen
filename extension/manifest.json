@@ -2,7 +2,7 @@
 "update_url": "https://clients2.google.com/service/update2/crx",
 
     "manifest_version": 3,
-    "name": "Hide Youtube Watched Videos",
+    "name": "NeverSeen",
     "description": "This extension will hide watched youtube videos from the subscriptions page.",
     "version": "1.7.2",
     "action": {
