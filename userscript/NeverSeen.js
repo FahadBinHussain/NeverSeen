@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      15.0
 // @description  Click button to hide ALL fully watched videos (no timestamp) currently on page. No background tasks.
-// @author       You
+// @author       Fahad
 // @match        https://www.youtube.com/*
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -110,10 +110,40 @@
         btn.innerText = "HIDE WATCHED";
         btn.onclick = runFilterOnce;
 
+        console.debug("NeverSeen: Adding manual filter button.");
+
         document.body.appendChild(btn);
     }
 
-    // Add button after a slight delay to ensure page init
-    setTimeout(createButton, 1500);
+    // Helper: Only keep the button on the History page
+    function isHistoryPage() {
+        // Use pathname to avoid query params. Handles leading/trailing slashes.
+        return window.location.pathname.replace(/\/+$/, '') === '/feed/history';
+    }
+
+    // Remove the button if it exists
+    function removeButton() {
+        const btn = document.getElementById('yt-manual-filter-btn');
+        if (btn) btn.remove();
+        console.debug("NeverSeen: Removed manual filter button.");
+    }
+
+    // Add button after a slight delay to ensure page init, but only on the History page
+    function maybeCreateButton() {
+        if (isHistoryPage()) {
+            setTimeout(createButton, 1500);
+        } else {
+            removeButton();
+        }
+    }
+
+    // Initial run
+    maybeCreateButton();
+
+    // YouTube is an SPA; hook into navigation events to add/remove the button dynamically
+    // 'yt-navigate-finish' is fired by YouTube when client-side navigation completes.
+    window.addEventListener('yt-navigate-finish', maybeCreateButton);
+    // Fallbacks for browsers or platforms that may not emit the YouTube custom event
+    window.addEventListener('popstate', maybeCreateButton);
 
 })();
