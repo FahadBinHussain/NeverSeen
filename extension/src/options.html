@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hide Youtube Watched Videos Options</title>
+    <link href="options.css" rel="stylesheet">
+    <script src="options.js"></script>
+</head>
+
+<body class="text-center">
+    <main class="form-options">
+        <form>
+            <img class="mb-4" src="/images/icon128.png" alt="" width="72" height="57">
+            <h1 class="h1 mb-3 fw-normal">Hide Youtube Watched Videos</h1>
+            <h3 class="h3 mb-3 fw-normal">Options</h3>
+
+            <div class="form-floating">
+                <div class="input-group mb-3">
+
+                    <label for="threshold">Watched percentage: <span id="currentValue"></span></label>
+                    <input class="form-range" type="range" min="10" max="100" step="10" class="slider" id="threshold" />
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
